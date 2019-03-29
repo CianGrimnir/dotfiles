@@ -5,21 +5,18 @@ nnoremap <leader>q :q<cr>
 set foldmethod=indent
 set foldlevel=1
 set foldnestmax=2
-set nofoldenable
-" `za` toggles `zc` closes `zo` opens `zR` open all `zM` close all
+set nofoldenable					" `za` toggles `zc` closes `zo` opens `zR` open all `zM` close all
 autocmd BufWinLeave *.py,*.sh,*.cpp  mkview
-autocmd BufWinEnter *.py,*.sh,*.cpp  silent loadview
-" To save folds automatically when you close a file
-set clipboard=unnamedplus
-"use vimx if vim doesn't support clipboard	
+autocmd BufWinEnter *.py,*.sh,*.cpp  silent loadview	" To save folds automatically when you close a file
+set clipboard=unnamedplus				"use vimx if vim doesn't support clipboard	
 set nocompatible
 set number
 set nobackup
 set noswapfile						"no backup files
 set autoread						"Auto reload file after external command
 set autowrite
-"set mouse=n
-set path+=**
+"set mouse=n						"enable mouse
+set path+=**						" :find $FILENAME can look up recursively through the subdirectories
 set laststatus=2
 set statusline+=%#LineNr#				"Color same as number
 set statusline+=\ %f					"Filename
@@ -40,7 +37,7 @@ autocmd Filetype go :let mapleader=","
 map / <Plug>(incsearch-forward)				
 map ? <Plug>(incsearch-backward)		
 syntax on
-set wildmenu
+set wildmenu						"vim command line completion
 set pastetoggle=<F3>  					"To toggle paste mode (to turnoff autoindent when you paste code)
 set paste
 set backspace=2
@@ -49,9 +46,11 @@ noremap <silent> <F1> :vertical resize -5 <CR>
 set t_Co=256
 set t_BE=						" disable bracketed paste (on by default in vim8)
 "colorscheme gruvbox 					"Monokai CandyPaper Revolution alduin railscasts gruvbox (with bg=dark)
-
 set bg=dark
-"colorscheme $VIM_COLOR_SCHEME
+
+"colorscheme $VIM_COLOR_SCHEME				
+" If want to use colorscheme as per userid, set $VIM_COLOR_SCHEME variable at bashrc as per user demand
+
 let python_highlight_all=1
 filetype plugin on
 hi Search ctermbg=Gray
@@ -61,10 +60,13 @@ augroup MyFile
 augroup END
 noremap <TAB> 	<C-W>w			
 "switch window using <tab> instead of Ctrl-W w
+
 nnoremap <F5> :buffers<CR>:buffer<Space> 
 "When F5 is pressed,a numbered list of file names is printed, type a number and press Enter 
 "buffer! 2 --> would hide prev buffer (keeping its changes) and display 2 buffer used while changing file
+
 set hidden 						" To avoid above usage
+
 "hi Directory cterm=bold ctermfg=Grey
 highlight MatchParen ctermfg=yellow ctermbg=Darkred cterm=NONE
 set dictionary-=/usr/share/dict/dict_final dictionary+=/usr/share/dict/dict_final
@@ -72,6 +74,7 @@ set complete+=k
 autocmd BufRead *.py  set smartindent
 autocmd BufWritePre *.py normal m`:%s/\s\+&//e ``
 "remove trailing whitespaces  while writing to file from buffer
+
 autocmd Filetype c,cpp setlocal cindent foldmethod=syntax
 autocmd Filetype c,cpp setlocal comments^=:///
 filetype plugin indent on
@@ -79,18 +82,23 @@ autocmd Filetype vim set keywordprg=":help"
 autocmd BufWinEnter *.txt match Directory /"[^"]\+"/
 autocmd Filetype python nnoremap <buffer> K :<C-u>execute "!pydoc3 " . expand("<cword>") <CR>	
 "help page for word under cursor "K"
+
 autocmd Filetype * nnoremap <buffer> Q :<C-u>execute "!grep -E --color '^\".*' ".$HOME."/.vimrc; read; " <CR>	
 "To display shortcut while editing "Q"	
+
 autocmd BufWinEnter *.py nnoremap <F9> :w<CR>: !python %:p<CR>	
 "Execute open python script
+
 autocmd BufWinEnter *.sh nnoremap <F8> :w<CR>: !bash %:p<CR>
 "Execute open bash script
+
 let s:undoDir = $HOME."/.vim/_undodir_" . $USER
 if !isdirectory(s:undoDir)
 	call mkdir(s:undoDir,'p')
 endif
 let &undodir=s:undoDir					"Location to store undo history
 set undofile						"Maintain undo history
+
 "Persistent undo,even after closing file
 set undolevels=1000					"Nax number of changes
 set undoreload=10000					"Max lines to save for undo on a buffer reload
@@ -99,12 +107,14 @@ autocmd BufReadPost *
 \ if line("'\"") > 0 && line ("'\"") <= line("$") |
   \   exe "normal! g'\"" |
 \ endif
+"jump to the last position when reopening a file
 
 if empty(glob('~/.vim/autoload/plug.vim'))
         silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+"Vim plugin to visualize your Vim undo tree.
 nnoremap <F6> :GundoToggle<CR>
 let g:gundo_width=30
 let g:gundo_preview_height=10
@@ -114,6 +124,7 @@ if has('python3')
 	let g:gundo_prefer_python3=1
 endif
  
+"Load vim plugin
 call plug#begin('~/.vim/plugged')
 Plug 'sjl/gundo.vim'
 Plug 'scrooloose/nerdtree'
@@ -125,10 +136,13 @@ Plug 'sjl/badwolf'
 "Plug 'davidhalter/jedi-vim'
 call plug#end()
 
+"colorscheme settings
 colorscheme badwolf
 let g:badwolf_darkgutter=1
 let g:badwolf_tabline=2
 let g:badwolf_vss_props_highlight=1
+
+"NERDTree settings
 "autocmd vimenter * NERDTree			"Open NerdTree default when vim start
 autocmd vimenter * wincmd p
 autocmd BufWinEnter * :silent NERDTreeMirror 
@@ -141,7 +155,7 @@ augroup nerdtreehidetirslashes
 augroup end
 nmap <F4> :NERDTreeToggle<CR>
 
-"vim-go setting & highlights
+"vim-go settings & highlights
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 let g:go_fmt_command="goimports"
 let g:go_disable_autoinstall=0
@@ -154,8 +168,8 @@ let g:go_highlight_fields=1
 let g:go_highlight_operators=1
 let g:go_highlight_function_calls=1
 let g:go_highlight_build_constraints=1
-let g:go_auto_type_info=1 	" auto :GoInfo whenever there's a valid indentifier under the cursor
-"let g:go_auto_sameids=1 	" auto :GoSameIds highlight matching identifiers
+let g:go_auto_type_info=1 			" auto :GoInfo whenever there's a valid indentifier under the cursor
+"let g:go_auto_sameids=1 			" auto :GoSameIds highlight matching identifiers
 set updatetime=50
 "let g:go_list_type="locationlist/quickfix"
 "let g:go_test_timeout='10s' default
@@ -170,6 +184,7 @@ autocmd Filetype go nmap <leader>d :GoDef<CR>
 autocmd Filetype go nmap <leader>pd :GoDefPop<CR>
 autocmd Filetype go nmap <leader>i <Plug>(go-info)
 " Go to Function/Structure definition
+
 "script which requires argument
 "autocmd Filetype go nmap <leader>b <Plug>(go-build)
 " GoTestFunc : to test function under cursor
@@ -178,15 +193,16 @@ autocmd Filetype go nmap <leader>i <Plug>(go-info)
 " :GoDefStack show all your location invoked via :GoDef
 " :GoDecls show all types and function declarations
 " :GoInfo  show type information about identifiers under the cursor
+
 " dif : to delete inner function body
 " vif - yif : to select / yank inner function body
-"vaf - yaf : to select / yank function declaration + body
+" vaf - yaf : to select / yank function declaration + body
 
-"let g:pymode_python='python'
-"For molokai theme
+"For molokai colorscheme settings
 "let g:rehash256=1
 "let g:molokai_original=1
 "colorscheme molokai
+
 
 "------------
 " SHORTCUT :
@@ -248,7 +264,7 @@ autocmd Filetype go nmap <leader>i <Plug>(go-info)
 "m: Show NERD tree menu
 "R: Refresh the tree
 
-
+"Use below netrw if you're having issue for NERDTree
 "default highlight pattern defined
 "let g:netrw_banner=0 					" hide netrw top message
 "let g:netrw_liststyle=3
