@@ -69,7 +69,7 @@ set hidden 						" To avoid above usage
 
 "hi Directory cterm=bold ctermfg=Grey
 highlight MatchParen ctermfg=yellow ctermbg=Darkred cterm=NONE
-set dictionary-=/usr/share/dict/dict_final dictionary+=/usr/share/dict/dict_final
+"set dictionary-=/usr/share/dict/dict_final dictionary+=/usr/share/dict/dict_final
 set complete+=k
 autocmd BufRead *.py  set smartindent
 autocmd BufWritePre *.py normal m`:%s/\s\+&//e ``
@@ -132,8 +132,10 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'fatih/vim-go', { 'do':':GoUpdateBinaries' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'sjl/badwolf'
+Plug 'hashivim/vim-terraform'
+Plug 'vim-scripts/mars.vim'
+Plug 'Valloric/YouCompleteMe'
 "Plug 'AndrewRadev/splitjoin.vim'
-"Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 "colorscheme settings
@@ -155,35 +157,47 @@ augroup nerdtreehidetirslashes
 augroup end
 nmap <F4> :NERDTreeToggle<CR>
 
+"Terraform setting
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+let g:terraform_remap_spacebar=1
+let g:terraform_commentstring='//%s'
+let g:terraform_fmt_on_save=1
+
+"YouCompleteMe setting
+let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/vim-terraform/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_completion=1
+nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 "vim-go settings & highlights
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-let g:go_fmt_command="goimports"
-let g:go_disable_autoinstall=0
-let g:go_highlight_functions=1
-let g:go_highlight_types=1
-let g:go_highlight_extra_types=1
-let g:go_highlight_methods=1
-let g:go_highlight_structs=1
-let g:go_highlight_fields=1
-let g:go_highlight_operators=1
-let g:go_highlight_function_calls=1
-let g:go_highlight_build_constraints=1
-let g:go_auto_type_info=1 			" auto :GoInfo whenever there's a valid indentifier under the cursor
-"let g:go_auto_sameids=1 			" auto :GoSameIds highlight matching identifiers
-set updatetime=50
-"let g:go_list_type="locationlist/quickfix"
-"let g:go_test_timeout='10s' default
-"let g:go_fmt_fail_silently=1 not to show errors during parsing the file
-"<C-x><C-o> call code-completion
-"autocmd Filetype go nmap <leader>t <Plug>(go-test)
-autocmd Filetype go nmap <leader>t :GoTest %<CR>
-"autocmd Filetype go nmap <leader>r <Plug>(go-run)
-autocmd Filetype go nmap <leader>r :GoRun %<CR>
-autocmd Filetype go nmap <leader>ar :GoRun % 
-autocmd Filetype go nmap <leader>d :GoDef<CR>
-autocmd Filetype go nmap <leader>pd :GoDefPop<CR>
-autocmd Filetype go nmap <leader>i <Plug>(go-info)
-" Go to Function/Structure definition
+"autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+"let g:go_fmt_command="goimports"
+"let g:go_disable_autoinstall=0
+"let g:go_highlight_functions=1
+"let g:go_highlight_types=1
+"let g:go_highlight_extra_types=1
+"let g:go_highlight_methods=1
+"let g:go_highlight_structs=1
+"let g:go_highlight_fields=1
+"let g:go_highlight_operators=1
+"let g:go_highlight_function_calls=1
+"let g:go_highlight_build_constraints=1
+"let g:go_auto_type_info=1 			" auto :GoInfo whenever there's a valid indentifier under the cursor
+""let g:go_auto_sameids=1 			" auto :GoSameIds highlight matching identifiers
+"set updatetime=50
+""let g:go_list_type="locationlist/quickfix"
+""let g:go_test_timeout='10s' default
+""let g:go_fmt_fail_silently=1 not to show errors during parsing the file
+""<C-x><C-o> call code-completion
+""autocmd Filetype go nmap <leader>t <Plug>(go-test)
+"autocmd Filetype go nmap <leader>t :GoTest %<CR>
+""autocmd Filetype go nmap <leader>r <Plug>(go-run)
+"autocmd Filetype go nmap <leader>r :GoRun %<CR>
+"autocmd Filetype go nmap <leader>ar :GoRun % 
+"autocmd Filetype go nmap <leader>d :GoDef<CR>
+"autocmd Filetype go nmap <leader>pd :GoDefPop<CR>
+"autocmd Filetype go nmap <leader>i <Plug>(go-info)
+"" Go to Function/Structure definition
 
 "script which requires argument
 "autocmd Filetype go nmap <leader>b <Plug>(go-build)
