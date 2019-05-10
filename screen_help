@@ -3,7 +3,7 @@ SCREEN Keybinding
 Creating Window 	C-a c
 Switching windows 	C-a n
 Listing Windows		C-a w	C-a "
-Toggle between current	C-a C-a
+Toggle between current	C-a C-a or C-a tab
 and previous windwos
 start copy mode		C-a [
 paste copied text	C-a ]
@@ -18,10 +18,10 @@ SPLIT
 
 horizontally 		C-a S
 vertically		C-a | || C-a V
+unsplit       C-a Q
 Jump to next display 	C-a tab
 remove current region	C-a X
 remove all region expt	C-a Q
-current
 
 
 redraw Window		C-a C-l
