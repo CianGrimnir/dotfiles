@@ -29,6 +29,7 @@ set history=100
 set scrolloff=5
 set smartcase						" if /step search for combination, if /Step search for exact case match
 set cursorline
+tabstop=4
 "set title
 set binary						"support binary
 set smarttab
