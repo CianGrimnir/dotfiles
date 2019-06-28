@@ -222,6 +222,7 @@ nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "------------
 " SHORTCUT :
 "------------
+"Download vim-colors from https://github.com/flazz/vim-colorschemes
 "set formatoptions-=or  stop vim continuing the comment automatically
 " new tab ":tabnew"
 " list matches "[I" (include-search)
