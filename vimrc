@@ -171,34 +171,34 @@ let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 "vim-go settings & highlights
-"autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-"let g:go_fmt_command="goimports"
-"let g:go_disable_autoinstall=0
-"let g:go_highlight_functions=1
-"let g:go_highlight_types=1
-"let g:go_highlight_extra_types=1
-"let g:go_highlight_methods=1
-"let g:go_highlight_structs=1
-"let g:go_highlight_fields=1
-"let g:go_highlight_operators=1
-"let g:go_highlight_function_calls=1
-"let g:go_highlight_build_constraints=1
-"let g:go_auto_type_info=1 			" auto :GoInfo whenever there's a valid indentifier under the cursor
-""let g:go_auto_sameids=1 			" auto :GoSameIds highlight matching identifiers
-"set updatetime=50
-""let g:go_list_type="locationlist/quickfix"
-""let g:go_test_timeout='10s' default
-""let g:go_fmt_fail_silently=1 not to show errors during parsing the file
-""<C-x><C-o> call code-completion
-""autocmd Filetype go nmap <leader>t <Plug>(go-test)
-"autocmd Filetype go nmap <leader>t :GoTest %<CR>
-""autocmd Filetype go nmap <leader>r <Plug>(go-run)
-"autocmd Filetype go nmap <leader>r :GoRun %<CR>
-"autocmd Filetype go nmap <leader>ar :GoRun % 
-"autocmd Filetype go nmap <leader>d :GoDef<CR>
-"autocmd Filetype go nmap <leader>pd :GoDefPop<CR>
-"autocmd Filetype go nmap <leader>i <Plug>(go-info)
-"" Go to Function/Structure definition
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+let g:go_fmt_command="goimports"
+let g:go_disable_autoinstall=0
+let g:go_highlight_functions=1
+let g:go_highlight_types=1
+let g:go_highlight_extra_types=1
+let g:go_highlight_methods=1
+let g:go_highlight_structs=1
+let g:go_highlight_fields=1
+let g:go_highlight_operators=1
+let g:go_highlight_function_calls=1
+let g:go_highlight_build_constraints=1
+let g:go_auto_type_info=1 			" auto :GoInfo whenever there's a valid indentifier under the cursor
+"let g:go_auto_sameids=1 			" auto :GoSameIds highlight matching identifiers
+set updatetime=50
+"let g:go_list_type="locationlist/quickfix"
+"let g:go_test_timeout='10s' default
+"let g:go_fmt_fail_silently=1 not to show errors during parsing the file
+"<C-x><C-o> call code-completion
+"autocmd Filetype go nmap <leader>t <Plug>(go-test)
+autocmd Filetype go nmap <leader>t :GoTest %<CR>
+"autocmd Filetype go nmap <leader>r <Plug>(go-run)
+autocmd Filetype go nmap <leader>r :GoRun %<CR>
+autocmd Filetype go nmap <leader>ar :GoRun % 
+autocmd Filetype go nmap <leader>d :GoDef<CR>
+autocmd Filetype go nmap <leader>pd :GoDefPop<CR>
+autocmd Filetype go nmap <leader>i <Plug>(go-info)
+" Go to Function/Structure definition
 
 "script which requires argument
 "autocmd Filetype go nmap <leader>b <Plug>(go-build)
