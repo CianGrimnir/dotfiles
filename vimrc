@@ -148,6 +148,15 @@ let g:validator_python_checkers = ['flake8']
 let g:validator_auto_open_quickfix = 1
 let g:validator_python_flake8_args = '--max-line-length=120'
 
+"Close quickfix window if no file is opened
+augroup MyGroup
+    autocmd!
+    if exists('##QuitPre')
+        autocmd QuitPre * if &filetype != 'qf' | silent! lclose | endif
+    endif
+augroup END
+
+
 "colorscheme settings
 colorscheme badwolf
 let g:badwolf_darkgutter=1
