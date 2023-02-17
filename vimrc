@@ -29,7 +29,7 @@ set history=100
 set scrolloff=5
 set smartcase						" if /step search for combination, if /Step search for exact case match
 set cursorline
-tabstop=4
+set tabstop=4
 "set title
 set binary						"support binary
 set smarttab
@@ -44,6 +44,8 @@ set paste
 set backspace=2
 noremap <silent> <F2> :vertical resize +5 <CR>
 noremap <silent> <F1> :vertical resize -5 <CR>
+noremap <silent> <F8> :horizontal resize +5 <CR>
+noremap <silent> <F9> :horizontal resize -5 <CR>
 set t_Co=256
 set t_BE=						" disable bracketed paste (on by default in vim8)
 "colorscheme gruvbox 					"Monokai CandyPaper Revolution alduin railscasts gruvbox (with bg=dark)
@@ -87,7 +89,7 @@ autocmd Filetype python nnoremap <buffer> K :<C-u>execute "!pydoc3 " . expand("<
 autocmd Filetype * nnoremap <buffer> Q :<C-u>execute "!grep -E --color '^\".*' ".$HOME."/.vimrc; read; " <CR>	
 "To display shortcut while editing "Q"	
 
-autocmd BufWinEnter *.py nnoremap <F9> :w<CR>: !python %:p<CR>	
+autocmd BufWinEnter *.py nnoremap <F0> :w<CR>: !python %:p<CR>	
 "Execute open python script
 
 autocmd BufWinEnter *.sh nnoremap <F8> :w<CR>: !bash %:p<CR>
@@ -136,8 +138,15 @@ Plug 'sjl/badwolf'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-scripts/mars.vim'
 Plug 'Valloric/YouCompleteMe'
+Plug 'nvie/vim-flake8'
+Plug 'maralla/validator.vim'
 "Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
+
+"Validator 
+let g:validator_python_checkers = ['flake8']
+let g:validator_auto_open_quickfix = 1
+let g:validator_python_flake8_args = '--max-line-length=120'
 
 "colorscheme settings
 colorscheme badwolf
@@ -145,11 +154,14 @@ let g:badwolf_darkgutter=1
 let g:badwolf_tabline=2
 let g:badwolf_vss_props_highlight=1
 
+"Python Flake8
+autocmd FileType python map <buffer> <F7> :call flake8#Flake8()<CR>
+
 "NERDTree settings
 "autocmd vimenter * NERDTree			"Open NerdTree default when vim start
 autocmd vimenter * wincmd p
-autocmd BufWinEnter * :silent NERDTreeMirror 
-let g:NERDTreeWinSize=25
+"autocmd BufWinEnter * :silent NERDTreeMirror 
+let g:NERDTreeWinSize=30
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeShowBookmarks=1
 augroup nerdtreehidetirslashes
@@ -166,7 +178,19 @@ let g:terraform_commentstring='//%s'
 let g:terraform_fmt_on_save=1
 
 "YouCompleteMe setting
-let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/vim-terraform/.ycm_extra_conf.py'
+python3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+else:
+	sys.path.append(os.getcwd())
+EOF
+
+let g:ycm_server_python_interpreter='python3'
+let g:ycm_global_ycm_extra_conf = '/local/home/rkhnair/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -218,7 +242,11 @@ autocmd Filetype go nmap <leader>i <Plug>(go-info)
 "let g:molokai_original=1
 "colorscheme molokai
 
-
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 "------------
 " SHORTCUT :
 "------------
